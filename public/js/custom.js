@@ -12,8 +12,13 @@ login.addEventListener('click' , ()=>{
     name.value = '';
 });
 send.addEventListener('click' , ()=>{
-    sockets.emit('msgSend' , write.value);
-    write.value = '';
+    if(write.value != ""){
+        sockets.emit('msgSend' , write.value);
+        write.value = '';
+    }else{
+        return false;
+    }
+   
 })
 sockets.on('loginsuccess' , data => {
     console.log(data)
@@ -21,10 +26,23 @@ sockets.on('loginsuccess' , data => {
     messageContainer.classList.remove('hide');
 });
 sockets.on('msgSended' , data => {
+    checkConsole(data);
+    // let div = document.createElement('div');
+    // div.classList.add('sendMessage');
+    // div.innerHTML = ` <div class="author">${sockets.username} </div> 
+    // <p class="message">${data}</p>
+    // <span class="time">12:30 </span> `;
+    // check_message.appendChild(div);
+    // check_message.scrollTop = check_message.scrollHeight;
+});
+
+const checkConsole = (mass)=>{
     let div = document.createElement('div');
     div.classList.add('sendMessage');
-    div.innerHTML = ` <div class="author">${sockets.username} </div> 
-    <p class="message">${data}</p>
+    div.innerHTML = ` <div class="author"><img src="images/phone.png" > </div> 
+    <p class="message">${mass}</p>
     <span class="time">12:30 </span> `;
-check_message.appendChild(div);
-})
+    check_message.appendChild(div);
+    check_message.scrollTop = check_message.scrollHeight;
+    
+}
