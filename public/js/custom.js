@@ -7,6 +7,17 @@ let login = document.querySelector('#login');
 let send = document.querySelector('#send');
 let sendMessage = document.querySelector('.sendMessage');
 let messageContainer = document.querySelector('.messageContainer');
+let gameStart = document.querySelector('#game');
+let bookStart = document.querySelector('#book');
+const gmsSocket = io('/game') ;
+const booksocket = io('/book');
+gameStart.addEventListener('click' , ()=>{
+    gmsSocket.emit('gsmstart' , "game Socket  is starting");
+});
+bookStart.addEventListener('click' , ()=>{
+    booksocket.emit('bookstart' , "book socket is starting")
+});
+
 login.addEventListener('click' , ()=>{
     sockets.emit('login' ,name.value);
     name.value = '';
